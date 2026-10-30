@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicación interactiva para aprender Spring Boot, MVC, configuración y buenas prácticas.">
+    <title>Spring Boot Learning Lab</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="/css/app.css">
+</head>
+<body>
+<div id="app" class="app-shell">
+    <section id="splash" class="splash-screen" aria-labelledby="splash-title">
+        <div class="splash-content">
+            <div class="logo-mark" aria-hidden="true">{ }</div>
+            <h1 id="splash-title">Spring Boot Learning Lab</h1>
+            <p class="hero-copy">Aprendiendo Spring Boot desde adentro</p>
+        </div>
+    </section>
+
+    <section id="landing-page" class="splash-screen hidden" aria-labelledby="landing-title">
+        <div class="splash-card">
+            <div class="logo-mark" aria-hidden="true">{ }</div>
+            <p class="eyebrow">Desarrollo de Software Web II</p>
+            <h1 id="landing-title">Spring Boot Learning Lab</h1>
+            <p class="hero-copy">Aprende cómo funciona una aplicación Spring Boot por dentro</p>
+            <p class="splash-intro">Explora conceptos paso a paso, sigue el recorrido de una petición y aprende con ejemplos de préstamos de libros y equipos del instituto.</p>
+            <div class="topic-pills" aria-label="Temas principales">
+                <span>Spring Boot</span><span>MVC</span><span>JPA</span><span>Java 21</span>
+            </div>
+            <button id="start-learning" class="btn btn-primary" type="button">Comenzar aprendizaje</button>
+        </div>
+    </section>
+
+    <main id="learning-app" class="hidden">
+        <header class="topbar">
+            <button class="brand-button" id="home-button" type="button" aria-label="Volver al inicio">
+                <span class="brand-mark">{ }</span>
+                <span><strong>Spring Boot</strong><small>Learning Lab</small></span>
+            </button>
+            <div class="top-actions">
+                <button id="open-laboratory" class="btn btn-ghost" data-open-section="practice-lab" type="button">Laboratorio</button>
+                <button id="open-vocabulary" class="btn btn-ghost" data-open-section="vocabulary" type="button">Vocabulario</button>
+                <button class="btn btn-ghost" data-open-section="sources" type="button">Fuentes</button>
+                <a class="btn btn-ghost" href="/swagger-ui.html" target="_blank" rel="noopener">Swagger</a>
+            </div>
+        </header>
+
+        <section id="dashboard" class="view active-view">
+            <div class="hero-panel">
+                <div>
+                    <p class="eyebrow">Ruta de aprendizaje</p>
+                    <h2>Aprende Spring Boot interactuando</h2>
+                    <p>Explora cada módulo, prueba conceptos y utiliza un caso real de préstamo de libros y equipos.</p>
+                </div>
+                <div class="progress-card" aria-live="polite">
+                    <span>Tu progreso</span>
+                    <strong id="progress-label">0 / 4 módulos</strong>
+                    <div class="progress-track"><span id="progress-bar"></span></div>
+                </div>
+            </div>
+
+            <div class="module-grid">
+                <article class="module-card">
+                    <div class="module-number">01</div>
+                    <div class="module-icon">⚙</div>
+                    <h3 id="module1-card-title">Spring Boot por dentro</h3>
+                    <p>Autoconfiguración, IoC, Beans, inyección de dependencias, Tomcat y el recorrido MVC.</p>
+                    <button class="module-link" data-open-module="module1" type="button" aria-labelledby="module1-card-title">Ver módulo <span aria-hidden="true">→</span></button>
+                </article>
+                <article class="module-card">
+                    <div class="module-number">02</div>
+                    <div class="module-icon">⌘</div>
+                    <h3 id="module2-card-title">Configura y conecta</h3>
+                    <p>pom.xml, properties, YAML, Profiles y un préstamo real conectado al backend.</p>
+                    <button class="module-link" data-open-module="module2" type="button" aria-labelledby="module2-card-title">Ver módulo <span aria-hidden="true">→</span></button>
+                </article>
+                <article class="module-card">
+                    <div class="module-number">03</div>
+                    <div class="module-icon">◇</div>
+                    <h3 id="module3-card-title">Buenas prácticas y tendencias</h3>
+                    <p>DTOs, validación, errores, seguridad, Records, Virtual Threads, Actuator, OpenAPI y Docker.</p>
+                    <button class="module-link" data-open-module="module3" type="button" aria-labelledby="module3-card-title">Ver módulo <span aria-hidden="true">→</span></button>
+                </article>
+                <article class="module-card">
+                    <div class="module-number">04</div>
+                    <div class="module-icon">✓</div>
+                    <h3 id="module4-card-title">Comprueba lo aprendido</h3>
+                    <p>Resuelve un desafío final y relaciona la arquitectura con decisiones reales de desarrollo.</p>
+                    <button class="module-link" data-open-module="module4" type="button" aria-labelledby="module4-card-title">Ver módulo <span aria-hidden="true">→</span></button>
+                </article>
+            </div>
+        </section>
+
+        <section id="module1" class="view">
+            <div class="section-head">
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p class="eyebrow">Módulo 1</p>
+                <h2>Spring Boot por dentro</h2>
+                <p>Primero encendemos la aplicación. Después seguimos una petición completa desde el navegador hasta la base de datos.</p>
+                <div class="module-goals"><strong>En este módulo aprenderás</strong><ul><li>Cómo arranca Spring Boot</li><li>Cómo se crean e inyectan los Beans</li><li>Cómo viaja una petición MVC</li><li>Controller vs RestController</li></ul></div>
+                <p class="module-case">Caso práctico: préstamo de un notebook del instituto</p>
+            </div>
+
+            <div class="module1-labs">
+            <div class="learning-card startup-lab">
+                <div class="card-head">
+                    <div><span class="mini-label">Laboratorio</span><h3>¿Qué ocurre cuando ejecutamos Spring Boot?</h3></div>
+                    <button id="run-startup" class="btn btn-primary" type="button">▶ Ejecutar aplicación</button>
+                </div>
+                <p class="simulation-note">Secuencia didáctica: no reinicia el servidor. En el arranque real, algunas tareas se solapan.</p>
+                <div class="simulation-controls"><span id="startup-progress" role="status">Paso 0 de 7</span><span id="startup-state">Avance automático cada 1,8 segundos. Puedes pausar para leer.</span><button id="pause-startup" class="btn btn-secondary" type="button" disabled>Pausar simulación</button></div>
+                <div id="startup-steps" class="startup-steps" role="group" aria-label="Etapas del arranque de Spring Boot">
+                    <button class="step-pill pending" type="button" disabled>@SpringBootApplication</button>
+                    <button class="step-pill pending" type="button" disabled>Autoconfiguración</button>
+                    <button class="step-pill pending" type="button" disabled>ComponentScan</button>
+                    <button class="step-pill pending" type="button" disabled>ApplicationContext y Beans</button>
+                    <button class="step-pill pending" type="button" disabled>Inyección de dependencias</button>
+                    <button class="step-pill pending" type="button" disabled>Tomcat embebido</button>
+                    <button class="step-pill pending" type="button" disabled>Aplicación lista</button>
+                </div>
+                <div class="simulation-result">
+                    <h4>¿Qué está ocurriendo?</h4>
+                    <p id="startup-announcement" class="simulation-announcement" role="status">Ejecuta la aplicación para comenzar.</p>
+                    <div id="startup-detail"><p>Las siete etapas permanecen visibles. Al ejecutarse, cada una muestra su explicación, su importancia y un ejemplo. Selecciona una etapa ejecutada para revisarla sin prisa.</p></div>
+                </div>
+            </div>
+
+            <div class="learning-card">
+                <div class="card-head"><div><span class="mini-label">Simulación MVC</span><h3>El viaje de una petición</h3></div><button id="next-request-step" class="btn btn-secondary" type="button">Comenzar recorrido</button></div>
+                <p class="scenario">Un estudiante solicita el préstamo de un notebook. Desde la interfaz presiona <strong>“Solicitar notebook”</strong>.</p>
+                <div class="simulation-controls"><span id="request-progress" role="status">Paso 0 de 8</span><button id="restart-request" class="text-button" type="button">Reiniciar recorrido</button></div>
+                <div id="request-flow" class="request-flow" role="group" aria-label="Recorrido de una petición HTTP">
+                    <button class="request-node pending" type="button" disabled>Usuario</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>POST /api/prestamos</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>DispatcherServlet</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>PrestamoController</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>PrestamoService</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>PrestamoRepository</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>H2</button><span aria-hidden="true">→</span>
+                    <button class="request-node pending" type="button" disabled>201 Created</button>
+                </div>
+                <div class="simulation-result"><h4>Explicación del paso</h4><p id="request-concept" class="simulation-announcement" role="status">La petición aún no ha comenzado.</p><p id="request-explanation">Comienza el recorrido para seguir la petición desde el navegador.</p><p id="request-extra"></p><p id="request-success" role="status" hidden>✓ Petición completada · ✓ Préstamo creado · HTTP 201 Created</p></div>
+                <div class="layer-map" aria-label="Responsabilidades de las capas">
+                    <div><strong>Controller</strong><span>↓ recibe la petición</span></div><div><strong>Service · @Service</strong><span>↓ aplica lógica de negocio</span></div><div><strong>Repository · @Repository</strong><span>↓ accede a datos con Spring Data JPA</span></div><div><strong>Entity · @Entity</strong><span>↓ representa los datos persistidos</span></div>
+                </div>
+                <details class="module1-more"><summary>Ver métodos HTTP: GET, POST, PUT y DELETE</summary><p>GET consulta recursos; POST solicita un préstamo; PUT puede actualizar un recurso y DELETE puede eliminarlo. Los dos últimos ilustran la semántica HTTP: no agregan endpoints al laboratorio.</p></details>
+            </div>
+
+            </div>
+
+            <div class="learning-card split-card">
+                <div>
+                    <span class="mini-label">Compara</span>
+                    <h3>@Controller vs @RestController</h3>
+                    <div class="compare-grid">
+                        <div class="compare-item"><strong>@Controller</strong><p>Se utiliza normalmente para devolver vistas HTML, por ejemplo con Thymeleaf.</p><details class="controller-example"><summary>Ver ejemplo</summary><p>Se utiliza normalmente cuando queremos devolver una vista HTML.</p><pre class="code-block">@Controller
+public class InicioController {
+    @GetMapping("/")
+    public String inicio() {
+        return "index";
+    }
+}</pre><p>Devuelve una vista Thymeleaf.</p></details></div>
+                        <div class="compare-item"><strong>@RestController</strong><p>Devuelve datos directamente, habitualmente JSON, ideal para APIs REST.</p><details class="controller-example"><summary>Ver ejemplo</summary><p>Se utiliza cuando queremos devolver datos directamente, normalmente JSON.</p><pre class="code-block">@RestController
+@RequestMapping("/api/prestamos")
+public class PrestamoController {
+    // Delega en PrestamoService
+    // y devuelve PrestamoResponse.
+}</pre><p>Devuelve datos para una API REST.</p></details></div>
+                    </div>
+                </div>
+                <div class="quick-check" data-check="dispatcher">
+                    <h3>Comprueba</h3>
+                    <p>¿Qué componente recibe primero las peticiones en Spring MVC?</p>
+                    <button class="answer-btn" data-correct="false" type="button">Repository</button>
+                    <button class="answer-btn" data-correct="true" type="button">DispatcherServlet</button>
+                    <button class="answer-btn" data-correct="false" type="button">Entity</button>
+                    <div class="quiz-result simulation-result"><h4>Resultado</h4><p class="check-feedback" role="status">Elige una alternativa para recibir una explicación.</p></div>
+                </div>
+            </div>
+            <div class="module1-footer"><button class="btn btn-complete" data-complete="module1" type="button">Marcar módulo 1 como completado ✓</button>
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p id="module1-completion" role="status"></p>
+            </div>
+        </section>
+
+        <section id="module2" class="view" aria-labelledby="module2-title">
+            <div class="section-head">
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p class="eyebrow">Módulo 2 · Fase 2</p>
+                <h2 id="module2-title">Configura y conecta</h2>
+                <p>Aprende cómo se prepara y configura el proyecto y compruébalo con una operación real.</p>
+                <div class="module2-goals"><strong>En este módulo aprenderás</strong><ul><li>Cómo Maven prepara el proyecto</li><li>Cómo configurar Spring Boot</li><li>Cómo funcionan los Profiles</li><li>Cómo un préstamo recorre las capas y llega a H2</li></ul></div>
+                <p class="module2-case">Caso práctico: registrar el préstamo de un recurso del instituto.</p>
+            </div>
+
+            <section id="maven-lab" class="learning-card" aria-labelledby="maven-title">
+                <h3 id="maven-title">¿Cómo trabaja Maven?</h3>
+                <div class="maven-flow" role="group" aria-label="Etapas de preparación del proyecto">
+                    <button data-maven-step="pom" type="button" aria-pressed="false" aria-controls="dependency-detail">pom.xml</button><b aria-hidden="true">→</b>
+                    <button data-maven-step="maven" type="button" aria-pressed="false" aria-controls="dependency-detail">Maven</button><b aria-hidden="true">→</b>
+                    <button data-maven-step="download" type="button" aria-pressed="false" aria-controls="dependency-detail">Descarga dependencias</button><b aria-hidden="true">→</b>
+                    <button data-maven-step="compile" type="button" aria-pressed="false" aria-controls="dependency-detail">Compila y prepara la aplicación</button>
+                </div>
+                <div class="maven-dependency-heading"><h3 id="dependencies-title">¿Qué necesita nuestro proyecto?</h3><p>Los Starters reúnen dependencias compatibles; H2 aporta el motor de base de datos. Selecciona una opción para ver qué aporta.</p></div>
+                <div class="dependency-grid" role="group" aria-labelledby="dependencies-title">
+                    <button class="dependency-card" data-dependency="web" type="button" aria-pressed="false" aria-controls="dependency-detail"><strong>spring-boot-starter-web</strong><span>Web y MVC</span></button>
+                    <button class="dependency-card" data-dependency="jpa" type="button" aria-pressed="false" aria-controls="dependency-detail"><strong>spring-boot-starter-data-jpa</strong><span>Persistencia</span></button>
+                    <button class="dependency-card" data-dependency="validation" type="button" aria-pressed="false" aria-controls="dependency-detail"><strong>spring-boot-starter-validation</strong><span>Validaciones</span></button>
+                    <button class="dependency-card" data-dependency="h2" type="button" aria-pressed="false" aria-controls="dependency-detail"><strong>H2</strong><span>Base de datos</span></button>
+                </div>
+                <div class="module2-result maven-output" id="dependency-detail">
+                    <div><span id="maven-result-kind" class="mini-label" hidden>Resultado compartido</span><h4 id="dependency-name">Selecciona una etapa o una dependencia</h4><p id="dependency-explanation" role="status">Aquí verás su función y, cuando corresponda, un ejemplo XML.</p></div>
+                    <pre id="dependency-code" class="code-block" hidden></pre>
+                </div>
+            </section>
+
+            <div class="module2-config-grid">
+                <section class="learning-card" aria-labelledby="config-title">
+                    <div class="card-head"><div><span class="mini-label">Laboratorio de configuración</span><h3 id="config-title">Properties vs YAML</h3></div><div class="segmented" role="group" aria-label="Formato de configuración"><button class="segment active" data-config-mode="properties" type="button" aria-pressed="true">Properties</button><button class="segment" data-config-mode="yaml" type="button" aria-pressed="false">YAML</button></div></div>
+                    <p>Properties y YAML cumplen la misma función: permiten configurar aspectos de la aplicación como el puerto, la conexión a la base de datos y opciones de JPA. La diferencia principal está en la forma de escribir la configuración: application.properties utiliza claves separadas por puntos, mientras que application.yml organiza la información de forma jerárquica mediante indentación.</p>
+                    <div class="config-controls">
+                        <label>Puerto <input id="port-input" type="number" min="1024" max="65535" value="8081" aria-describedby="config-hint"></label>
+                        <label><input id="sql-toggle" type="checkbox" checked> Mostrar SQL</label>
+                    </div>
+                    <p id="config-hint" class="hint">Solo cambia la demostración: no modifica el puerto, la base de datos ni la configuración real de esta aplicación.</p>
+                    <div class="module2-result">
+                        <h4 id="config-format">La misma configuración · application.properties</h4>
+                        <pre id="config-preview" class="code-block"></pre>
+                        <div class="port-equivalence"><div><strong>Properties</strong><pre id="port-properties"></pre></div><div><strong>YAML</strong><pre id="port-yaml"></pre></div></div>
+                        <p id="config-summary" role="status"></p>
+                    </div>
+                    <div class="property-buttons" role="group" aria-label="Explorar propiedades">
+                        <button data-property="port" type="button" aria-pressed="false">server.port</button>
+                        <button data-property="url" type="button" aria-pressed="false">spring.datasource.url</button>
+                        <button data-property="username" type="button" aria-pressed="false">spring.datasource.username</button>
+                        <button data-property="password" type="button" aria-pressed="false">spring.datasource.password</button>
+                        <button data-property="sql" type="button" aria-pressed="false">spring.jpa.show-sql</button>
+                        <button data-property="ddl" type="button" aria-pressed="false">spring.jpa.hibernate.ddl-auto</button>
+                    </div>
+                    <div class="module2-result"><h4>¿Qué configura esta propiedad?</h4><p id="property-detail" role="status">Selecciona una propiedad para consultar su significado.</p></div>
+                </section>
+
+                <section class="learning-card" aria-labelledby="profiles-title">
+                    <span class="mini-label">Profiles</span>
+                    <h3 id="profiles-title">Una configuración para cada ambiente</h3>
+                    <p>Un Profile permite usar configuraciones distintas según el ambiente.</p>
+                    <div class="profile-options" role="group" aria-label="Explorar ambientes">
+                        <button class="profile-card" data-profile="dev" type="button" aria-pressed="false"><strong>DEV</strong><span>application-dev.properties</span></button>
+                        <button class="profile-card" data-profile="prod" type="button" aria-pressed="false"><strong>PROD</strong><span>application-prod.properties</span></button>
+                    </div>
+                    <div class="module2-result"><h4 id="profile-title">Explora DEV y PROD</h4><p id="profile-detail" role="status">Selecciona un ambiente para ver su configuración y conocer por qué cambia.</p><pre id="profile-code" class="code-block" hidden></pre></div>
+                    <details class="profile-activation"><summary>¿Cómo se activa un Profile?</summary><p>Por ejemplo, al iniciar la aplicación puedes usar:</p><pre class="code-block">java -jar app.jar --spring.profiles.active=dev</pre><p>La propiedad equivalente es <code>spring.profiles.active=dev</code>. Los archivos del perfil complementan o sobrescriben application.properties.</p></details>
+                    <p class="hint">Ejemplos educativos. Estos controles no activan ningún Profile ni cambian credenciales reales.</p>
+                </section>
+            </div>
+
+            <section class="learning-card backend-lab" aria-labelledby="backend-title">
+                <span class="mini-label">Backend real</span>
+                <h3 id="backend-title">Registra un préstamo y observa las capas</h3>
+                <p>Ahora probaremos lo aprendido registrando un préstamo real.</p>
+                <p>Explora las capas: haz clic en cada cajón del flujo para ver qué función cumple dentro del backend.</p>
+                <div class="module2-layers" role="group" aria-label="Explorar las capas del préstamo">
+                    <button data-layer="frontend" type="button" aria-pressed="false">Frontend</button><span aria-hidden="true">→</span>
+                    <button data-layer="controller" type="button" aria-pressed="false">RestController</button><span aria-hidden="true">→</span>
+                    <button data-layer="service" type="button" aria-pressed="false">Service</button><span aria-hidden="true">→</span>
+                    <button data-layer="repository" type="button" aria-pressed="false">Repository</button><span aria-hidden="true">→</span>
+                    <button data-layer="entity" type="button" aria-pressed="false">Entity</button><span aria-hidden="true">→</span>
+                    <button data-layer="h2" type="button" aria-pressed="false">H2</button>
+                </div>
+                <div class="module2-result layer-result"><div><h4>¿Qué hace esta capa?</h4><p id="layer-detail" role="status">Selecciona una capa para conocer su responsabilidad y ver un fragmento del ejemplo real.</p></div><pre id="layer-code" class="code-block" hidden></pre></div>
+                <p class="hint">Entity es el modelo persistente utilizado por JPA/Hibernate, no un intermediario que recibe peticiones HTTP. Los fragmentos muestran piezas del código, no clases completas.</p>
+                <div class="backend-grid">
+                    <form id="loan-form" novalidate>
+                        <label>Nombre del alumno<input id="student-name" name="nombreAlumno" type="text" minlength="3" maxlength="80" placeholder="Ej. Ana Pérez" required></label>
+                        <label>Correo<input id="student-email" name="correoAlumno" type="email" placeholder="ana@instituto.cl" required></label>
+                        <label>Recurso<select id="resource-select" name="recursoId" required><option value="">Cargando recursos...</option></select></label>
+                        <button id="loan-submit" class="btn btn-primary" type="submit">Registrar préstamo</button>
+                        <button id="return-practice-loan" class="btn btn-secondary" type="button" hidden>↩ Devolver recurso de práctica</button>
+                        <p id="practice-return-status" class="hint" role="status" hidden></p>
+                        <p id="resources-status" class="hint" role="status"></p>
+                        <button id="reload-resources" class="text-button" type="button" hidden>Reintentar carga de recursos</button>
+                    </form>
+                    <div class="loan-panels">
+                        <div class="module2-result"><h4 id="loan-request-title">Petición · POST /api/prestamos</h4><pre id="loan-request" class="code-block">Todavía no se ha enviado una petición.</pre><p id="loan-route">El recorrido de capas se mostrará después de enviar los datos.</p></div>
+                        <div class="module2-result"><h4>Respuesta del backend</h4><p id="loan-status" class="loan-status" role="status">Aún no has enviado una petición.</p><p id="loan-result-explanation">Aquí verás el código HTTP y la explicación del resultado.</p><pre id="loan-response" class="code-block">La respuesta JSON aparecerá aquí.</pre></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="h2-result" class="learning-card h2-result" aria-labelledby="h2-title" hidden>
+                <span class="mini-label">Resultado en base de datos</span>
+                <h3 id="h2-title">Préstamo guardado en H2</h3>
+                <p>Esta tabla representa cómo quedó persistido el préstamo en la base H2.</p>
+                <p>JPA/Hibernate transforma las Entities en datos persistidos. Esta vista utiliza únicamente los campos reales de la respuesta del backend; no abre la consola técnica ni muestra valores inventados.</p>
+                <div class="loan-table-scroll" role="region" aria-label="Registro del préstamo guardado" tabindex="0"><table><caption>Datos del último préstamo creado correctamente</caption><thead id="saved-loan-head"></thead><tbody id="saved-loan-body"></tbody></table></div>
+                <p id="saved-loan-note" class="hint" role="status"></p>
+            </section>
+
+            <div class="module2-footer">
+                <button class="btn btn-complete" data-complete="module2" type="button">Marcar módulo 2 como completado ✓</button>
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p id="module2-completion" role="status"></p>
+            </div>
+        </section>
+
+        <section id="module3" class="view" aria-labelledby="module3-title">
+            <div class="section-head">
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p class="eyebrow">Módulo 3 · Fase 3</p>
+                <h2 id="module3-title">Buenas prácticas y tendencias</h2>
+                <p>Una buena aplicación no solo debe funcionar: también debe ser segura, mantenible y fácil de probar.</p>
+                <div class="module3-goals"><strong>En este módulo aprenderás</strong><ul><li>Separar Entity y DTO</li><li>Validar datos y manejar errores</li><li>Proteger configuraciones sensibles</li><li>Conocer herramientas y tendencias modernas</li></ul></div>
+                <p class="module3-case">Seguiremos utilizando el sistema de préstamos del instituto.</p>
+            </div>
+
+                        <nav id="module3-pages-nav" class="module3-pages-nav" aria-label="Páginas del módulo 3">
+                <button data-module3-page="practices" type="button" aria-controls="module3-practices" aria-current="page" aria-pressed="true">1. Buenas prácticas</button>
+                <span aria-hidden="true">→</span>
+                <button data-module3-page="tools" type="button" aria-controls="module3-tools" aria-pressed="false">2. Tendencias y herramientas</button>
+                <p id="module3-page-status" role="status">Página 1 de 2 · Buenas prácticas</p>
+            </nav>
+
+            <div id="module3-practices" class="module3-page" role="region" aria-labelledby="module3-practices-title">
+                <h3 id="module3-practices-title" class="module3-page-heading" tabindex="-1">Buenas prácticas</h3>
+                <section class="learning-card" aria-labelledby="organization-heading">
+                <span class="mini-label">Organización del código</span>
+                <h3 id="organization-heading">¿Cómo organizamos una aplicación Spring Boot?</h3>
+                <p>Cada paquete agrupa una responsabilidad. Selecciona uno para ver qué hace en el caso de préstamos.</p>
+                <div class="organization-map">
+                    <div class="organization-group"><h4 id="organization-core-title">Flujo principal</h4><div class="organization-core" role="group" aria-labelledby="organization-core-title"><button data-package="controller" type="button" aria-pressed="false">Controller</button><span aria-hidden="true">↓</span><button data-package="service" type="button" aria-pressed="false">Service</button><span aria-hidden="true">↓</span><button data-package="repository" type="button" aria-pressed="false">Repository</button><span aria-hidden="true">↓</span><button data-package="entity" type="button" aria-pressed="false">Entity</button></div></div>
+                    <div class="organization-group"><h4 id="organization-support-title">Paquetes de apoyo</h4><div class="organization-support" role="group" aria-labelledby="organization-support-title"><button data-package="dto" type="button" aria-pressed="false">DTO</button><button data-package="exception" type="button" aria-pressed="false">Exception</button><button data-package="config" type="button" aria-pressed="false">Config</button></div></div>
+                </div>
+                <p class="hint">El flujo principal muestra las capas que participan en el procesamiento del préstamo. DTO, Exception y Config son paquetes de apoyo con responsabilidades específicas y no representan pasos consecutivos del flujo.</p>
+                <div class="module3-result"><h4 id="organization-title">Una responsabilidad por paquete</h4><p id="organization-detail" role="status">Las capas colaboran sin mezclar HTTP, reglas del préstamo y acceso a datos.</p><p id="organization-example" class="hint">Los paquetes de apoyo controlan los datos de la API, los errores y la configuración.</p></div>
+            </section>
+
+                <div class="module3-columns">
+                    <div class="module3-column">
+                        <section class="learning-card" aria-labelledby="dto-heading">
+                <span class="mini-label">Entity vs DTO</span>
+                <h3 id="dto-heading">Decide qué datos puede recibir el usuario</h3>
+                <p>Una Entity representa datos internos de la aplicación. Un DTO permite elegir exactamente qué información queremos exponer.</p>
+                <div class="entity-dto-grid">
+                    <div><strong>Ejemplo educativo: Entity Alumno</strong><pre class="code-block">@Entity
+class Alumno {
+    Long id;
+    String nombre;
+    String correo;
+    String password;
+}</pre><p class="hint">Este ejemplo muestra un riesgo; no agrega una Entity nueva al backend del laboratorio.</p></div>
+                    <div><p>Si esta Entity se devuelve directamente al usuario, ¿qué problema podría ocurrir?</p><div class="decision-row"><button class="btn btn-secondary" data-entity-answer="yes" type="button" aria-pressed="false">Devolver Entity directamente</button><button class="btn btn-primary" data-entity-answer="no" type="button" aria-pressed="false">Usar un DTO</button></div><div id="dto-result" class="module3-result"><h4 id="dto-result-label">Resultado</h4><p id="dto-feedback" role="status">Elige una alternativa para descubrir qué datos quedarían expuestos.</p></div></div>
+                </div>
+                <div id="dto-example" class="module3-result" hidden>
+                    <div class="dto-data-map"><div><strong>Entity</strong><span>id · nombre · correo · <em>password</em></span></div><b aria-hidden="true">→</b><div><strong>DTO</strong><span>id · nombre · correo</span></div><strong class="safe-field">password ✕ no se expone</strong></div>
+                    <pre class="code-block">public record AlumnoResponse(
+    Long id,
+    String nombre,
+    String correo
+) {}</pre>
+                </div>
+            </section>
+
+                        <section class="learning-card" aria-labelledby="validation-heading">
+                    <span class="mini-label">Validaciones</span><h3 id="validation-heading">Detén datos incorrectos antes del Service</h3>
+                    <p>Las validaciones impiden que datos incorrectos lleguen a la lógica del sistema: <strong>@NotBlank</strong> evita texto vacío, <strong>@Email</strong> comprueba el correo y <strong>@Min(1)</strong> exige un mínimo. <strong>@Valid</strong> activa estas validaciones cuando el Controller recibe la petición.</p>
+                    <details class="module3-example"><summary>Ver DTO y uso de @Valid</summary><pre class="code-block">public record PrestamoRequest(
+    @NotBlank String nombreAlumno,
+    @NotBlank @Email String correoAlumno,
+    @NotNull @Min(1) Long recursoId
+) {}
+
+// En el Controller:
+registrar(@Valid @RequestBody PrestamoRequest request)</pre><p class="hint">@NotNull exige un valor; @Min(1) exige que sea al menos 1. @Email comprueba el formato y @NotBlank impide cadenas vacías.</p></details>
+                    <form id="validation-form" class="validation-form" novalidate>
+                        <label>Nombre<input id="validation-name" type="text" autocomplete="off" aria-describedby="validation-note"></label>
+                        <label>Correo<input id="validation-email" type="email" value="correo-invalido" autocomplete="off" aria-describedby="validation-note"></label>
+                        <label>ID recurso<input id="validation-resource" type="number" min="1" step="1" value="0" aria-describedby="validation-note"></label>
+                        <button class="btn btn-primary" type="submit">Validar datos</button>
+                    </form>
+                    <p id="validation-note" class="hint">Simulación educativa local. No registra préstamos ni cambia PrestamoRequest: @Min(1) se enseña aquí como ejemplo; la validación definitiva corresponde al backend.</p>
+                    <div id="validation-result" class="module3-result"><h4>Resultado de la validación</h4><p id="validation-summary" role="status">Prueba los valores iniciales y luego corrige los campos.</p><ul id="validation-errors"></ul></div>
+                </section>
+                    </div>
+                    <div class="module3-column">
+                        <section class="learning-card" aria-labelledby="errors-heading">
+                    <span class="mini-label">Errores centralizados</span><h3 id="errors-heading">¿Qué ocurre cuando algo sale mal?</h3>
+                    <p><strong>@ControllerAdvice</strong> permite manejar errores desde un solo lugar y devolver respuestas claras. <strong>@RestControllerAdvice</strong> hace lo mismo para una API; <strong>@ExceptionHandler</strong> indica qué excepción manejar.</p>
+                    <details class="module3-example"><summary>Ver un handler de error</summary><pre class="code-block">@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity&lt;?&gt; manejarError(
+            RecursoNoEncontradoException ex) {
+        return ResponseEntity.status(404)
+            .body(Map.of("error", ex.getMessage()));
+    }
+}</pre><p class="hint">Fragmento representativo del manejo de errores del proyecto.</p></details>
+                    <div class="http-options" role="group" aria-label="Explorar códigos HTTP"><button data-http="200" type="button" aria-pressed="false">200 OK</button><button data-http="201" type="button" aria-pressed="false">201 Created</button><button data-http="400" type="button" aria-pressed="false">400 Bad Request</button><button data-http="404" type="button" aria-pressed="false">404 Not Found</button><button data-http="409" type="button" aria-pressed="false">409 Conflict</button></div>
+                    <div id="http-result" class="module3-result"><h4>Código HTTP</h4><strong id="http-code">Selecciona un código</strong><p id="http-description" role="status">Cada respuesta permite saber qué ocurrió con la petición del préstamo.</p><pre id="http-example" class="code-block" hidden></pre><p class="hint">Ejemplos didácticos: estos controles no envían peticiones ni crean préstamos.</p></div>
+                </section>
+
+                        <section class="learning-card" aria-labelledby="security-heading">
+                <span class="mini-label">Seguridad de configuración</span><h3 id="security-heading">¿Guardarías una contraseña dentro de application.properties?</h3>
+                <div class="security-grid"><div><p>¿Es una buena práctica escribir un secreto en el archivo que subimos al repositorio?</p><pre class="code-block">spring.datasource.password=MiClave123</pre><p class="hint">Valor ficticio para mostrar el riesgo. No es una contraseña real.</p><div class="decision-row"><button data-security-answer="yes" class="btn btn-secondary" type="button" aria-pressed="false">Sí, guardarla en el código</button><button data-security-answer="no" class="btn btn-primary" type="button" aria-pressed="false">No, usar una variable de entorno</button></div></div><div id="security-result" class="module3-result"><h4 id="security-label">Resultado</h4><p id="security-feedback" role="status">Elige una opción para revisar cómo proteger la configuración.</p><div id="security-example" hidden><pre class="code-block">spring.datasource.password=${DB_PASSWORD}</pre><p>DB_PASSWORD puede obtenerse desde una variable de entorno, sin escribir el secreto en GitHub.</p><div class="environment-flow"><span>Variable de entorno</span><b aria-hidden="true">→</b><span>Spring Boot</span><b aria-hidden="true">→</b><span>Configuración</span></div></div></div></div>
+            </section>
+                    </div>
+                </div>
+                <div class="module3-page-actions"><button class="btn btn-primary" data-module3-page="tools" type="button" aria-controls="module3-tools">Continuar a Tendencias y herramientas →</button></div>
+            </div>
+
+            <div id="module3-tools" class="module3-page" role="region" aria-labelledby="module3-tools-title" hidden>
+                <h3 id="module3-tools-title" class="module3-page-heading" tabindex="-1">Tendencias y herramientas</h3>
+                <section class="learning-card modern-java" aria-label="Versiones modernas"><div class="technology-pills"><strong>Spring Boot 3.x</strong><span aria-hidden="true">+</span><strong>Java 21</strong></div><p>Spring Boot moderno trabaja con versiones recientes de Java. En este laboratorio utilizamos Java 21. Esto permite utilizar características modernas del lenguaje y del ecosistema.</p></section>
+
+                <div class="module3-columns">
+                    <div class="module3-column">
+                        <section class="learning-card" aria-labelledby="records-heading">
+                    <span class="mini-label">Java Records</span><h3 id="records-heading">Un DTO con menos código repetitivo</h3>
+                    <p>Una clase tradicional necesita campos, constructor y accesores. Un Record expresa los datos de forma compacta: Java genera automáticamente constructor, accesores, equals, hashCode y toString.</p>
+                    <button id="compare-records" class="btn btn-secondary" type="button" aria-expanded="false" aria-controls="records-comparison">Comparar código</button>
+                    <div id="records-comparison" class="module3-result" hidden><h4>Problema y solución</h4><p id="records-count" role="status"></p><div class="record-code-grid"><div><strong>Problema: DTO tradicional</strong><pre id="traditional-dto" class="code-block"></pre></div><div><strong>Solución con Record</strong><pre id="record-dto" class="code-block"></pre></div></div><p class="hint">Comparación ilustrativa de DTOs, sin sustituir PrestamoResponse real. La clase mostrada incluye campos, constructor y accesores; el Record también genera equals, hashCode y toString.</p></div>
+                </section>
+
+                        <section class="learning-card" aria-labelledby="threads-heading">
+                    <span class="mini-label">Virtual Threads</span><h3 id="threads-heading">Atender muchas solicitudes que esperan I/O</h3>
+                    <p>Un hilo tradicional puede quedar ocupado mientras espera una operación de entrada/salida. Un Virtual Thread normalmente permite liberar su hilo portador mientras espera I/O compatible.</p>
+                    <div class="thread-comparison"><div><strong>HILO TRADICIONAL</strong><ol class="thread-flow"><li>Solicitud</li><li>espera BD / HTTP / archivo</li><li>el hilo de plataforma permanece ocupado durante la espera</li></ol></div><div><strong>VIRTUAL THREAD</strong><ol class="thread-flow"><li>Solicitud</li><li>espera BD / HTTP / archivo</li><li>la JVM puede aprovechar el hilo de plataforma para atender otra tarea</li></ol></div></div>
+                    <p>Los Virtual Threads son útiles cuando una aplicación maneja muchas tareas concurrentes que pasan tiempo esperando operaciones de entrada/salida. No hacen que una operación individual sea más rápida ni están pensados principalmente para acelerar cálculos intensivos de CPU.</p>
+                    <button id="simulate-threads" class="btn btn-secondary" type="button">Simular solicitudes</button>
+                    <div class="module3-result"><h4>Resultado de la simulación</h4><p id="threads-step" role="status">Listo para simular tres solicitudes.</p><ul id="threads-requests"></ul><p id="threads-explanation">Los Virtual Threads son livianos y permiten manejar muchas tareas bloqueantes con menor costo.</p></div>
+                    <p class="hint">Modelo educativo, no un benchmark. En Java 21 algunas operaciones pueden fijar un Virtual Thread a su portador. No reemplazan mágicamente el rendimiento de tareas intensivas de CPU.</p>
+                    <details class="module3-example"><summary>Ver la propiedad de configuración</summary><pre class="code-block">spring.threads.virtual.enabled=true</pre><p class="hint">Ya existe en el proyecto; esta actividad no la modifica.</p></details>
+                </section>
+                    </div>
+                    <div class="module3-column">
+                        <section class="learning-card" aria-labelledby="actuator-heading">
+                    <span class="mini-label">Actuator</span><h3 id="actuator-heading">Observa la aplicación en funcionamiento</h3>
+                    <p>Actuator permite observar el estado de una aplicación Spring Boot y ofrece endpoints de salud, información y métricas. Aquí consultamos la salud real.</p>
+                    <button id="check-health" class="btn btn-secondary" type="button" aria-expanded="false" aria-controls="health-result">Consultar estado real de la aplicación</button>
+                    <div id="health-result" class="module3-result health-result" hidden><h4>Petición</h4><pre class="code-block">GET /actuator/health</pre><h4>Respuesta</h4><p id="health-status" role="status">Todavía no se ha consultado el endpoint.</p><pre id="health-response" class="code-block" hidden></pre><h4>Explicación</h4><p id="health-explanation">UP significa que la aplicación se encuentra funcionando según los indicadores de salud consultados.</p></div>
+                </section>
+
+                        <section class="learning-card" aria-labelledby="swagger-heading">
+                    <span class="mini-label">OpenAPI / Swagger</span><h3 id="swagger-heading">Conoce y prueba los endpoints de la API</h3>
+                    <p>OpenAPI describe nuestra API. Swagger UI permite verla y probarla desde el navegador: endpoints, parámetros, request, response y códigos HTTP.</p>
+                    <details class="module3-example"><summary>Ver ejemplo: POST /api/prestamos</summary><strong>Request · JSON ilustrativo</strong><pre class="code-block">{
+  "nombreAlumno": "...",
+  "correoAlumno": "...",
+  "recursoId": 1
+}</pre><strong>Response esperada con datos válidos</strong><pre class="code-block">HTTP 201 Created
+PrestamoResponse en JSON</pre><p class="hint">Esquema de ejemplo, no una operación ejecutada.</p></details>
+                    <div class="module3-result">
+                        <h4>¿Cómo leer y probar Swagger?</h4>
+                        <ul>
+                            <li><strong>GET</strong> → consulta información y no crea registros.</li>
+                            <li><strong>POST</strong> → crea un nuevo recurso. En este proyecto permite registrar un préstamo.</li>
+                            <li><strong>PATCH</strong> → modifica parcialmente un recurso existente. En este proyecto permite registrar la devolución de un préstamo.</li>
+                            <li><strong>Try it out</strong> → habilita el endpoint para realizar una prueba.</li>
+                            <li><strong>Execute</strong> → envía realmente la petición HTTP al backend.</li>
+                            <li><strong>Request body</strong> → datos JSON que enviamos.</li>
+                            <li><strong>Response body</strong> → datos JSON que devuelve Spring Boot.</li>
+                        </ul>
+                        <details class="module3-example"><summary>Códigos HTTP: ¿qué significa la respuesta?</summary><ul>
+                            <li><strong>200 OK</strong> → operación realizada correctamente.</li>
+                            <li><strong>201 Created</strong> → nuevo registro creado.</li>
+                            <li><strong>400 Bad Request</strong> → los datos enviados tienen errores.</li>
+                            <li><strong>404 Not Found</strong> → el recurso solicitado no existe.</li>
+                            <li><strong>409 Conflict</strong> → la operación entra en conflicto con el estado actual del recurso.</li>
+                        </ul></details>
+                        <p class="hint"><strong>Swagger UI → Controller → Service → Repository → H2</strong></p>
+                    </div>
+                    <div class="module3-result risk" role="note"><p>GET es seguro para practicar porque solo consulta información. POST y PATCH ejecutan operaciones reales y pueden modificar los datos almacenados en H2.</p></div>
+                    <a class="text-button" href="/swagger-ui.html" target="_blank" rel="noopener">Abrir Swagger</a>
+                    <p class="hint">Utiliza Swagger para probar directamente los endpoints reales del backend y observar sus peticiones, respuestas y códigos HTTP.</p>
+                </section>
+                    </div>
+
+                        <section class="learning-card" aria-labelledby="docker-heading">
+                <span class="mini-label">Docker</span><h3 id="docker-heading">Del proyecto a un contenedor reproducible</h3>
+                <p>Docker permite ejecutar la aplicación dentro de un entorno reproducible llamado contenedor. Selecciona una etapa para conocer su función.</p>
+                <div class="docker-flow" role="group" aria-label="Etapas del despliegue"><button data-docker-step="project" type="button" aria-pressed="false">Proyecto Spring Boot</button><span aria-hidden="true">→</span><button data-docker-step="jar" type="button" aria-pressed="false">Maven genera JAR</button><span aria-hidden="true">→</span><button data-docker-step="image" type="button" aria-pressed="false">Docker crea imagen</button><span aria-hidden="true">→</span><button data-docker-step="container" type="button" aria-pressed="false">Se inicia contenedor</button><span aria-hidden="true">→</span><button data-docker-step="ready" type="button" aria-pressed="false">Aplicación disponible</button></div>
+                <div class="docker-result-grid"><div class="module3-result"><h4 id="docker-step-title">Una aplicación y su entorno</h4><p id="docker-step-detail" role="status">La imagen reúne el JAR y el entorno de ejecución. El contenedor ejecuta esa imagen; la configuración puede proporcionarse al iniciar.</p></div><details class="module3-example"><summary>Ver el Dockerfile real del proyecto</summary><pre class="code-block">FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY target/spring-boot-learning-lab-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]</pre></details></div>
+            </section>
+                </div>
+            <div class="module3-footer">
+                <button class="btn btn-secondary" data-module3-page="practices" type="button" aria-controls="module3-practices">← Volver a Buenas prácticas</button>
+                <button class="btn btn-complete" data-complete="module3" type="button" disabled>Marcar módulo 3 como completado ✓</button>
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p id="module3-completion" role="status"></p>
+            </div>
+            </div>
+
+        </section>
+
+        <section id="module4" class="view" aria-labelledby="module4-title">
+            <div class="section-head">
+                <button class="back-link" data-go-home type="button">← Volver</button>
+                <p class="eyebrow">Módulo 4</p>
+                <h2 id="module4-title">Comprueba lo aprendido</h2>
+                <p>Llegaste al cierre del recorrido. Ahora aplicarás lo aprendido sobre Spring Boot, arquitectura MVC, configuración y buenas prácticas.</p>
+                <ul class="module4-topics" aria-label="Conceptos del repaso"><li>Spring Boot</li><li>MVC</li><li>Configuración</li><li>Buenas prácticas</li></ul>
+            </div>
+
+            <section class="learning-card challenge-card" aria-labelledby="challenge-title">
+                <span class="mini-label">Repasar · responder · comprender</span>
+                <h3 id="challenge-title">Desafío de cierre</h3>
+                <p class="quiz-instructions">Elige una alternativa y pulsa «Responder» para ver la explicación. Después podrás avanzar; equivocarte no bloquea el recorrido.</p>
+                <form id="final-quiz" class="quiz-list" novalidate>
+                    <div class="quiz-progress-row"><p id="quiz-progress" role="status">Pregunta 1 de 5</p><div class="quiz-dots" aria-hidden="true"><span data-quiz-dot="0" class="current">●</span><span data-quiz-dot="1">○</span><span data-quiz-dot="2">○</span><span data-quiz-dot="3">○</span><span data-quiz-dot="4">○</span></div></div>
+                    <fieldset class="quiz-card" data-quiz-question="0" tabindex="-1"><legend>En el sistema de préstamos debemos decidir si un recurso está disponible antes de prestarlo. ¿En qué capa debería estar normalmente esta regla?</legend><label><input type="radio" name="q1" value="a"> <span>Controller</span></label><label><input type="radio" name="q1" value="b"> <span>Service</span></label><label><input type="radio" name="q1" value="c"> <span>Repository</span></label></fieldset>
+                    <fieldset class="quiz-card" data-quiz-question="1" tabindex="-1" hidden><legend>Cuando llega una petición HTTP a una aplicación Spring MVC, ¿qué componente actúa como Front Controller y dirige la petición?</legend><label><input type="radio" name="q2" value="a"> <span>DispatcherServlet</span></label><label><input type="radio" name="q2" value="b"> <span>H2 Console</span></label><label><input type="radio" name="q2" value="c"> <span>EntityManager</span></label></fieldset>
+                    <fieldset class="quiz-card" data-quiz-question="2" tabindex="-1" hidden><legend>Queremos cambiar una configuración solo para desarrollo sin afectar producción. ¿Qué herramienta de Spring Boot utilizaríamos?</legend><label><input type="radio" name="q3" value="a"> <span>Profiles</span></label><label><input type="radio" name="q3" value="b"> <span>DTO</span></label><label><input type="radio" name="q3" value="c"> <span>Repository</span></label></fieldset>
+                    <fieldset class="quiz-card" data-quiz-question="3" tabindex="-1" hidden><legend>¿Por qué es conveniente utilizar un DTO en lugar de devolver siempre una Entity directamente?</legend><label><input type="radio" name="q4" value="a"> <span>Para controlar los datos que se exponen</span></label><label><input type="radio" name="q4" value="b"> <span>Para reemplazar la base de datos</span></label><label><input type="radio" name="q4" value="c"> <span>Para iniciar Tomcat</span></label></fieldset>
+                    <fieldset class="quiz-card" data-quiz-question="4" tabindex="-1" hidden><legend>¿Cuál es una ventaja de los Virtual Threads?</legend><label><input type="radio" name="q5" value="a"> <span>Hacer automáticamente más rápido cualquier cálculo de CPU</span></label><label><input type="radio" name="q5" value="b"> <span>Manejar muchas tareas bloqueantes concurrentes con menor costo</span></label><label><input type="radio" name="q5" value="c"> <span>Generar Entities automáticamente</span></label></fieldset>
+                    <div id="quiz-feedback" class="module4-result" hidden><h4 id="quiz-feedback-title">Retroalimentación</h4><p id="quiz-feedback-text" role="status"></p></div>
+                    <div class="quiz-actions"><button id="quiz-answer" class="btn btn-primary" type="submit" disabled>Responder</button><button id="quiz-next" class="btn btn-secondary" type="button" disabled>Siguiente pregunta →</button></div>
+                </form>
+                <div id="quiz-result" class="module4-result final-result" hidden>
+                    <span class="mini-label">Resultado del desafío</span>
+                    <h3 id="quiz-score" tabindex="-1"></h3>
+                    <p id="quiz-percentage"></p>
+                    <p id="quiz-result-message"></p>
+                    <button id="quiz-repeat" class="btn btn-secondary" type="button">Repetir desafío</button>
+                </div>
+            </section>
+
+            <section class="learning-card reflection-card" aria-labelledby="reflection-question">
+                <span class="mini-label">Reflexión final</span>
+                <h3 id="reflection-question">¿Por qué no basta con copiar código que funciona?</h3>
+                <p>Comprender las capas, configuraciones y buenas prácticas permite saber por qué una aplicación funciona, dónde modificar una regla, cómo detectar errores y cómo hacer crecer el sistema sin mezclar responsabilidades.</p>
+                <p>En este laboratorio no solo ejecutamos Spring Boot: observamos cómo inicia, cómo procesa una petición, cómo accede a los datos y cómo aplicar buenas prácticas para mantener el proyecto organizado.</p>
+            </section>
+
+            <div class="module4-footer">
+                <button class="btn btn-complete" data-complete="module4" type="button">Marcar módulo 4 como completado ✓</button>
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p id="module4-completion" role="status"></p>
+            </div>
+        </section>
+
+
+        <section id="practice-lab" class="view" aria-labelledby="practice-lab-title">
+            <div class="section-head lab-head">
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p class="eyebrow">Práctica de código · no suma progreso a los módulos</p>
+                <h2 id="practice-lab-title">Laboratorio de práctica</h2>
+                <p>Practica los conceptos aprendidos antes de aplicarlos en un proyecto real.</p>
+                <p class="lab-intro">Aquí puedes resolver pequeños desafíos de Spring Boot, comparar tu respuesta y entender por qué funciona.</p>
+            </div>
+            <nav class="lab-areas" aria-label="Áreas del Laboratorio de práctica">
+                <button data-lab-area="code" type="button" aria-controls="lab-code-area" aria-pressed="true">Práctica de código</button>
+                <button data-lab-area="data" type="button" aria-controls="lab-data-area" aria-pressed="false">Datos en H2</button>
+            </nav>
+            <div id="lab-code-area">
+            <nav class="lab-navigation" aria-label="Desafíos de práctica de código">
+                <button data-lab-step="0" type="button" aria-controls="lab-challenge-1" aria-current="step">Desafío 1<span class="lab-step-state">Sin comprobar</span></button>
+                <button data-lab-step="1" type="button" aria-controls="lab-challenge-2">Desafío 2<span class="lab-step-state">Sin comprobar</span></button>
+                <button data-lab-step="2" type="button" aria-controls="lab-challenge-3">Desafío 3<span class="lab-step-state">Sin comprobar</span></button>
+                <button data-lab-step="3" type="button" aria-controls="lab-challenge-4">Desafío 4<span class="lab-step-state">Sin comprobar</span></button>
+                <button data-lab-step="4" type="button" aria-controls="lab-challenge-5">Desafío 5<span class="lab-step-state">Sin comprobar</span></button>
+            </nav>
+            <div id="lab-code-practice">
+                <p id="lab-position" class="lab-position" role="status">Desafío 1 de 5</p>
+                <article id="lab-challenge-1" class="lab-challenge" data-lab-challenge="0" aria-labelledby="lab-title-1">
+                    <p class="eyebrow">Anotaciones · controlador REST</p>
+                    <h3 id="lab-title-1" tabindex="-1">¿Qué anotación falta?</h3>
+                    <p>Queremos que Spring reconozca esta clase como un controlador REST.</p>
+                    <pre class="code-block"><code>__________
+public class PrestamoController {
+
+}</code></pre>
+                    <div class="lab-annotation-help" aria-labelledby="lab-annotation-help-title">
+                        <p id="lab-annotation-help-title">Opciones de apoyo</p>
+                        <ul><li><code>@RestController</code></li><li><code>@Entity</code></li><li><code>@Repository</code></li></ul>
+                    </div>
+                    <label for="lab-annotation-answer" class="lab-editor-label">Escribe la anotación que falta</label>
+                    <input id="lab-annotation-answer" class="lab-annotation-input" type="text" placeholder="@..." autocomplete="off" autocapitalize="off" spellcheck="false">
+                    <button class="btn lab-check" data-lab-check="0" type="button" disabled>Comprobar respuesta</button>
+                    <div id="lab-feedback-1" class="lab-feedback" role="status" hidden></div>
+                    <details class="lab-solution" hidden><summary>Comparar con solución</summary><pre class="code-block"><code>@RestController
+public class PrestamoController {
+
+}</code></pre><p>@RestController combina @Controller y @ResponseBody. En la API de préstamos identifica la capa que recibe peticiones HTTP y devuelve datos; el Service se ocupa de las reglas de negocio.</p></details>
+                </article>
+                <article id="lab-challenge-2" class="lab-challenge" data-lab-challenge="1" aria-labelledby="lab-title-2" hidden>
+                    <p class="eyebrow">Arquitectura · responsabilidades</p>
+                    <h3 id="lab-title-2" tabindex="-1">Ordena el recorrido de una petición</h3>
+                    <p>Tras llegar al Controller, ¿por qué capas pasa una petición para guardar un préstamo? Usa Subir y Bajar para ordenar la lista; también funcionan con Tab y Enter/Espacio.</p>
+                    <ol id="lab-layer-order" class="lab-layer-order" aria-label="Orden de las capas">
+                        <li data-lab-layer="Repository"><strong>Repository</strong><div><button data-lab-move="-1" type="button" aria-label="Subir Repository">↑ Subir</button><button data-lab-move="1" type="button" aria-label="Bajar Repository">↓ Bajar</button></div></li>
+                        <li data-lab-layer="Controller"><strong>Controller</strong><div><button data-lab-move="-1" type="button" aria-label="Subir Controller">↑ Subir</button><button data-lab-move="1" type="button" aria-label="Bajar Controller">↓ Bajar</button></div></li>
+                        <li data-lab-layer="Service"><strong>Service</strong><div><button data-lab-move="-1" type="button" aria-label="Subir Service">↑ Subir</button><button data-lab-move="1" type="button" aria-label="Bajar Service">↓ Bajar</button></div></li>
+                        <li data-lab-layer="H2"><strong>H2</strong><div><button data-lab-move="-1" type="button" aria-label="Subir H2">↑ Subir</button><button data-lab-move="1" type="button" aria-label="Bajar H2">↓ Bajar</button></div></li>
+                    </ol>
+                    <p id="lab-order-announcement" class="lab-hint" role="status">Ordena las cuatro capas antes de comprobar.</p>
+                    <button class="btn lab-check" data-lab-check="1" type="button">Comprobar orden</button>
+                    <div id="lab-feedback-2" class="lab-feedback" role="status" hidden></div>
+                    <details class="lab-solution" hidden><summary>Comparar con solución</summary><pre class="code-block"><code>Controller
+  ↓
+Service
+  ↓
+Repository
+  ↓
+H2</code></pre><p>En un préstamo, el Controller recibe los datos, el Service comprueba las reglas, el Repository persiste la información y H2 es la base de datos. Aquí solo ordenamos conceptos: no se consulta ni modifica H2.</p></details>
+                </article>
+                <article id="lab-challenge-3" class="lab-challenge" data-lab-challenge="2" aria-labelledby="lab-title-3" hidden>
+                    <p class="eyebrow">DTO · validación de datos</p>
+                    <h3 id="lab-title-3" tabindex="-1">Construye un DTO sencillo</h3>
+                    <p>Necesitamos recibir nombre, correo e identificador del recurso para registrar un préstamo. Sustituye los espacios en blanco por @NotBlank, @Email y @Min(1), según corresponda.</p>
+                    <label for="lab-dto-code" class="lab-editor-label">Tu código de PrestamoRequest</label>
+                    <textarea id="lab-dto-code" class="lab-code-editor" rows="10" spellcheck="false" autocapitalize="off" aria-describedby="lab-code-note">public record PrestamoRequest(
+    __________ String nombreAlumno,
+    __________ String correoAlumno,
+    __________ Long recursoId
+) {}</textarea>
+                    <p id="lab-code-note" class="lab-hint">Comprobación educativa de texto: no compila ni ejecuta Java. Este DTO de práctica no cambia las validaciones reales del backend.</p>
+                    <button class="btn lab-check" data-lab-check="2" type="button">Comprobar</button>
+                    <div id="lab-feedback-3" class="lab-feedback" role="status" hidden></div>
+                    <details class="lab-solution" hidden><summary>Comparar con solución</summary><pre class="code-block"><code>public record PrestamoRequest(
+    @NotBlank
+    String nombreAlumno,
+    @Email
+    String correoAlumno,
+    @Min(1)
+    Long recursoId
+) {}</code></pre><p>@NotBlank rechaza un nombre nulo, vacío o formado solo por espacios. @Email comprueba el formato del correo. @Min(1) exige un identificador de al menos 1 cuando hay valor. @Email y @Min no rechazan null por sí solas; para exigir presencia se necesitan restricciones adicionales. @Valid activa la validación del DTO recibido por un Controller.</p></details>
+                </article>
+                <article id="lab-challenge-4" class="lab-challenge" data-lab-challenge="3" aria-labelledby="lab-title-4" hidden>
+                    <p class="eyebrow">HTTP · creación de recursos</p>
+                    <h3 id="lab-title-4" tabindex="-1">Completa el endpoint</h3>
+                    <p>Queremos crear un nuevo préstamo. Elige la anotación que asocia este método del Controller con la operación HTTP adecuada.</p>
+                    <pre class="code-block"><code>__________("/api/prestamos")
+public ResponseEntity&lt;?&gt; registrar(...) {
+    ...
+}</code></pre>
+                    <fieldset class="lab-options"><legend>¿Qué anotación utilizarías?</legend>
+                        <label><input type="radio" name="lab-endpoint" value="get"> <span>@GetMapping</span></label>
+                        <label><input type="radio" name="lab-endpoint" value="post"> <span>@PostMapping</span></label>
+                        <label><input type="radio" name="lab-endpoint" value="delete"> <span>@DeleteMapping</span></label>
+                    </fieldset>
+                    <button class="btn lab-check" data-lab-check="3" type="button" disabled>Comprobar respuesta</button>
+                    <div id="lab-feedback-4" class="lab-feedback" role="status" hidden></div>
+                    <details class="lab-solution" hidden><summary>Comparar con solución</summary><pre class="code-block"><code>@PostMapping("/api/prestamos")
+public ResponseEntity&lt;?&gt; registrar(...) {
+    ...
+}
+
+// POST /api/prestamos → 201 Created</code></pre><p>Como viste en el recorrido MVC, el Controller recibe la petición y delega en el Service. POST se utiliza normalmente para crear un recurso y 201 Created confirma su creación. Esta actividad no envía una petición real.</p></details>
+                </article>
+                <article id="lab-challenge-5" class="lab-challenge" data-lab-challenge="4" aria-labelledby="lab-title-5" hidden>
+                    <p class="eyebrow">Entity y DTO · datos que exponemos</p>
+                    <h3 id="lab-title-5" tabindex="-1">¿Qué problema encuentras?</h3>
+                    <pre class="code-block"><code>@Entity
+public class Alumno {
+    private Long id;
+    private String nombre;
+    private String correo;
+    private String password;
+}</code></pre>
+                    <p>El Controller devuelve directamente esta Entity al usuario. ¿Qué riesgo existe?</p>
+                    <fieldset class="lab-options"><legend>Identifica el riesgo de exponer la entidad.</legend>
+                        <label><input type="radio" name="lab-entity" value="exposure"> <span>Puede exponer información interna como password.</span></label>
+                        <label><input type="radio" name="lab-entity" value="h2"> <span>H2 deja de funcionar.</span></label>
+                        <label><input type="radio" name="lab-entity" value="maven"> <span>Maven elimina la Entity.</span></label>
+                    </fieldset>
+                    <button class="btn lab-check" data-lab-check="4" type="button" disabled>Comprobar respuesta</button>
+                    <div id="lab-feedback-5" class="lab-feedback" role="status" hidden></div>
+                    <details class="lab-solution" hidden><summary>Comparar con solución</summary><p>Una alternativa es utilizar un DTO.</p><pre class="code-block"><code>public record AlumnoResponse(
+    Long id,
+    String nombre,
+    String correo
+) {}</code></pre><p>El DTO permite controlar exactamente qué información devolvemos. En el sistema de préstamos podemos mostrar los datos necesarios del alumno sin incluir su password. El fragmento Entity es ilustrativo y omite detalles de persistencia.</p></details>
+                </article>
+                <div class="lab-footer">
+                    <button id="lab-previous" class="btn btn-secondary" type="button" disabled>← Desafío anterior</button>
+                    <p id="lab-next-hint" class="lab-hint">Comprueba tu respuesta para continuar.</p>
+                    <button id="lab-next" class="btn lab-check" type="button" disabled>Siguiente desafío →</button>
+                </div>
+            </div>
+            <section id="lab-result" class="lab-result" aria-labelledby="lab-result-title" hidden>
+                <p class="eyebrow">Resultado de esta práctica</p>
+                <h3 id="lab-result-title" tabindex="-1">Práctica completada</h3>
+                <p id="lab-result-score" class="lab-result-score"></p>
+                <p id="lab-result-message"></p>
+                <p class="lab-hint">El resultado usa la última respuesta comprobada de cada desafío. Puedes revisar, corregir y comprobar otra vez. No modifica el progreso de los módulos.</p>
+                <div class="lab-result-actions"><button id="lab-review" class="btn btn-secondary" type="button">Revisar desafíos</button><button id="lab-repeat" class="btn lab-check" type="button">Repetir laboratorio</button></div>
+            </section>
+            </div>
+
+            <section id="lab-data-area" class="lab-data-area" aria-labelledby="lab-data-title" hidden>
+                <div class="lab-data-intro">
+                    <p class="eyebrow">Refuerzo Fase 2</p>
+                    <h3 id="lab-data-title" tabindex="-1">Datos en H2</h3>
+                    <p>Observa cómo la información pasa desde Spring Boot hasta la base de datos.</p>
+                    <p class="lab-hint">Cuando la aplicación guarda un préstamo, Java trabaja con objetos y JPA/Hibernate se encarga de convertir esa información en registros que H2 puede almacenar.</p>
+                </div>
+                <article class="lab-data-card" aria-labelledby="lab-persistence-title">
+                    <div class="lab-data-card-head"><h4 id="lab-persistence-title">Sigue el recorrido de un dato</h4><span class="lab-data-tag">Ejemplo educativo · no guarda datos</span></div>
+                    <div class="lab-persistence-flow" role="group" aria-label="Etapas de persistencia">
+                        <button data-lab-data-step="0" type="button" disabled><strong>Request / DTO</strong><small>PrestamoRequest</small></button><span aria-hidden="true">→</span>
+                        <button data-lab-data-step="1" type="button" disabled><strong>Controller</strong><small>PrestamoController</small></button><span aria-hidden="true">→</span>
+                        <button data-lab-data-step="2" type="button" disabled><strong>Service</strong><small>PrestamoService</small></button><span aria-hidden="true">→</span>
+                        <button data-lab-data-step="3" type="button" disabled><strong>Repository</strong><small>PrestamoRepository</small></button><span aria-hidden="true">→</span>
+                        <button data-lab-data-step="4" type="button" disabled><strong>JPA / Hibernate</strong><small>Entity Prestamo</small></button><span aria-hidden="true">→</span>
+                        <button data-lab-data-step="5" type="button" disabled><strong>H2</strong><small>Tabla PRESTAMO</small></button>
+                    </div>
+                    <div class="lab-persistence-panel" aria-live="polite" aria-atomic="true">
+                        <p id="lab-data-step-count" class="lab-hint">Recorrido sin iniciar</p>
+                        <h4 id="lab-data-step-title">Del objeto al registro</h4>
+                        <p id="lab-data-step-explanation">Pulsa “Seguir el dato” para conocer una etapa a la vez. Los fragmentos representan el flujo real del proyecto; aquí no se ejecuta un registro de préstamo.</p>
+                        <pre class="code-block"><code id="lab-data-step-code">PrestamoRequest → PrestamoController → PrestamoService
+→ PrestamoRepository → JPA / Hibernate → H2</code></pre>
+                    </div>
+                    <button id="lab-follow-data" class="btn lab-check" type="button">Seguir el dato</button>
+                </article>
+                <article class="lab-data-card" aria-labelledby="lab-stored-title">
+                    <div class="lab-data-card-head"><h4 id="lab-stored-title">¿Qué quedó guardado?</h4><span class="lab-data-tag lab-data-real">Dato real del backend · solo lectura</span></div>
+                    <p class="lab-hint">Consulta <code>GET /api/prestamos</code>. La respuesta es un DTO: incluye datos de PRESTAMO y el nombre/tipo del RECURSO relacionado; no es una consulta SQL directa desde el navegador.</p>
+                    <div class="lab-data-actions"><button id="lab-load-data" class="btn lab-check" type="button">Ver datos almacenados</button><button id="lab-refresh-data" class="btn btn-secondary" type="button" hidden>Actualizar datos</button></div>
+                    <p id="lab-data-status" class="lab-data-status" role="status">Pulsa “Ver datos almacenados” para consultar los préstamos existentes. Entrar aquí no crea ni modifica registros.</p>
+                    <div id="lab-data-empty" class="lab-data-empty" hidden><p>Aún no hay registros para mostrar.</p><p>Cuando se registre información mediante el sistema, podrá visualizarse aquí.</p></div>
+                    <div id="lab-data-table-region" class="lab-data-table-region" role="region" aria-label="Préstamos reales almacenados" tabindex="0" hidden>
+                        <table class="lab-data-table"><caption>Préstamos obtenidos del backend · PrestamoResponse</caption><thead><tr><th scope="col">ID</th><th scope="col">Alumno</th><th scope="col">Correo</th><th scope="col">ID recurso</th><th scope="col">Recurso</th><th scope="col">Tipo</th><th scope="col">Estado</th><th scope="col">Fecha del préstamo</th></tr></thead><tbody id="lab-data-rows"></tbody></table>
+                    </div>
+                    <details id="lab-data-error" class="lab-data-disclosure" hidden><summary>Detalle técnico de la consulta</summary><pre id="lab-data-error-text" class="code-block"></pre></details>
+                    <details class="lab-data-disclosure"><summary>¿Cómo leer esta tabla?</summary><dl class="lab-data-glossary">
+                        <div><dt>Tabla</dt><dd>Conjunto de datos relacionados; PRESTAMO reúne los préstamos.</dd></div>
+                        <div><dt>Columna</dt><dd>Una característica, como NOMBRE_ALUMNO o ESTADO.</dd></div>
+                        <div><dt>Fila / registro</dt><dd>Un préstamo almacenado, con sus propios datos.</dd></div>
+                        <div><dt>ID</dt><dd>Identificador único de un registro.</dd></div>
+                        <div><dt>Clave primaria</dt><dd>Campo que distingue cada registro. En PRESTAMO es ID, declarado con @Id y generado automáticamente.</dd></div>
+                    </dl></details>
+                    <details class="lab-data-disclosure"><summary>Ver estructura</summary>
+                        <p class="lab-hint">Estructura real verificada en H2 y en las entidades del proyecto. Los nombres SQL usan mayúsculas; los atributos Java, camelCase.</p>
+                        <div class="lab-schema-grid">
+                            <div><h4>PRESTAMO · Entity Prestamo</h4><dl class="lab-data-schema">
+                                <dt>ID · BIGINT</dt><dd>id · clave primaria, @GeneratedValue(IDENTITY).</dd>
+                                <dt>NOMBRE_ALUMNO · CHARACTER VARYING</dt><dd>nombreAlumno · nombre del estudiante.</dd>
+                                <dt>CORREO_ALUMNO · CHARACTER VARYING</dt><dd>correoAlumno · correo del estudiante.</dd>
+                                <dt>FECHA_PRESTAMO · TIMESTAMP</dt><dd>fechaPrestamo · fecha y hora de creación.</dd>
+                                <dt>ESTADO · CHARACTER VARYING</dt><dd>estado · estado del préstamo.</dd>
+                                <dt>RECURSO_ID · BIGINT</dt><dd>recurso · relación @ManyToOne con RECURSO.ID.</dd>
+                            </dl></div>
+                            <div><h4>RECURSO · Entity Recurso</h4><dl class="lab-data-schema">
+                                <dt>ID · BIGINT</dt><dd>id · clave primaria generada.</dd>
+                                <dt>NOMBRE · CHARACTER VARYING</dt><dd>nombre · nombre del libro o equipo.</dd>
+                                <dt>TIPO · CHARACTER VARYING</dt><dd>tipo · categoría del recurso.</dd>
+                                <dt>DISPONIBLE · BOOLEAN</dt><dd>disponible · indica si puede prestarse.</dd>
+                            </dl><p class="lab-hint">El DTO de respuesta expone recursoId, recurso y tipoRecurso; el nombre y el tipo provienen de RECURSO, no son columnas de PRESTAMO.</p></div>
+                        </div>
+                    </details>
+                </article>
+                <article class="lab-data-card" aria-labelledby="lab-jpa-title">
+                    <div class="lab-data-card-head"><h4 id="lab-jpa-title">¿Qué hace JPA/Hibernate?</h4><span class="lab-data-tag">Explicación educativa</span></div>
+                    <p>En Java trabajamos con objetos como Prestamo. JPA define cómo relacionarlos con la base de datos y Hibernate realiza gran parte de ese trabajo automáticamente.</p>
+                    <p class="lab-object-flow"><strong>Objeto Java: Prestamo</strong><span aria-hidden="true">→</span><strong>JPA / Hibernate</strong><span aria-hidden="true">→</span><strong>Fila en H2: PRESTAMO</strong></p>
+                    <details class="lab-data-disclosure"><summary>Ver ejemplo SQL</summary>
+                        <p class="lab-data-tag">Ejemplo representativo · no ejecutado ni capturado en tiempo real</p>
+                        <pre class="code-block"><code>SELECT ID, NOMBRE_ALUMNO, CORREO_ALUMNO,
+       RECURSO_ID, ESTADO, FECHA_PRESTAMO
+FROM PRESTAMO
+ORDER BY ID;</code></pre>
+                        <p class="lab-hint">JPA/Hibernate puede generar instrucciones SQL para comunicarse con la base de datos. Este SELECT corresponde al esquema real y sirve para entender cómo se leen registros; la visualización de arriba consulta el endpoint existente.</p>
+                    </details>
+                    <details class="lab-data-disclosure"><summary>Inspeccionar con H2 Console</summary>
+                        <p>La consola H2 es una herramienta técnica que permite inspeccionar directamente las tablas y ejecutar consultas SQL.</p>
+                        <p class="lab-hint">Ya está habilitada en este proyecto. Para inspeccionar utiliza consultas de lectura como SELECT; esta página de apoyo no ejecuta SQL ni cambia información.</p>
+                        <a class="btn btn-secondary" href="/h2-console/" target="_blank" rel="noopener">Abrir H2 Console ↗</a>
+                    </details>
+                </article>
+            </section>
+
+        </section>
+
+        <section id="vocabulary" class="view" aria-labelledby="vocabulary-title">
+            <div class="section-head">
+                <button class="back-link" data-go-home type="button">← Volver a la ruta de aprendizaje</button>
+                <p class="eyebrow">Apoyo al aprendizaje · no suma progreso</p>
+                <h2 id="vocabulary-title">Vocabulario técnico</h2>
+                <p>Busca y comprende palabras técnicas utilizadas en este laboratorio.</p>
+                <p class="vocabulary-intro">Aquí encontrarás conceptos de Spring Boot, arquitectura MVC, configuración, bases de datos, APIs y herramientas modernas explicados en lenguaje sencillo.</p>
+            </div>
+            <div id="vocabulary-search-controls" class="vocabulary-controls" role="search" aria-label="Buscar en el vocabulario">
+                <label for="vocabulary-search">Buscar en el vocabulario</label>
+                <div class="vocabulary-search-row"><input id="vocabulary-search" type="search" placeholder="Buscar término técnico…" autocomplete="off" aria-controls="vocabulary-results"><button id="vocabulary-submit" class="btn btn-secondary" type="button">Buscar</button><button id="vocabulary-clear" class="btn btn-secondary" type="button">Limpiar búsqueda</button></div>
+                <p id="vocabulary-count" role="status">82 conceptos disponibles</p>
+            </div>
+            <section id="vocabulary-search-results" class="vocabulary-search-results" aria-labelledby="vocabulary-results-title" hidden>
+                <h3 id="vocabulary-results-title" tabindex="-1">Resultados encontrados</h3>
+                <div id="vocabulary-empty" role="status" hidden><p id="vocabulary-empty-query"></p><p>Revisa la palabra o explora las categorías.</p></div>
+                <div id="vocabulary-results" class="vocabulary-words"></div>
+            </section>
+            <div id="vocabulary-categories">
+                <h3 class="vocabulary-explore-title">Explora por categoría</h3>
+                <div id="vocabulary-category-grid" class="vocabulary-grid"></div>
+            </div>
+            <dialog id="vocabulary-detail" class="vocabulary-detail" aria-labelledby="vocabulary-detail-title">
+                <div class="vocabulary-detail-head">
+                    <div><h3 id="vocabulary-detail-title" tabindex="-1"></h3><p id="vocabulary-detail-full-name"></p><p id="vocabulary-detail-category" class="vocabulary-category"></p></div>
+                    <button id="vocabulary-close" class="btn btn-secondary" type="button">Cerrar</button>
+                </div>
+                <dl class="vocabulary-definition">
+                    <dt>¿Qué significa?</dt><dd id="vocabulary-meaning"></dd>
+                    <dt>¿Para qué sirve?</dt><dd id="vocabulary-purpose"></dd>
+                    <dt>Ejemplo en nuestro laboratorio</dt><dd id="vocabulary-example"></dd>
+                </dl>
+                <nav class="vocabulary-detail-nav" aria-label="Recorrer términos de la categoría">
+                    <button id="vocabulary-previous" class="btn btn-secondary" type="button">← Anterior</button>
+                    <button id="vocabulary-next" class="btn btn-secondary" type="button">Siguiente →</button>
+                </nav>
+            </dialog>
+        </section>
+
+        <section id="sources" class="view" aria-labelledby="sources-title">
+            <div class="section-head">
+                <button class="back-link" data-go-home type="button">← Volver al aprendizaje</button>
+                <p class="eyebrow">Bibliografía</p>
+                <h2 id="sources-title">Fuentes y referencias</h2>
+                <p>Documentación y material utilizado para construir el laboratorio.</p>
+                <p class="sources-context">Fuentes oficiales y material recomendado para respaldar los conceptos de la evaluación.</p>
+            </div>
+            <div class="source-groups">
+                <details class="source-group">
+                    <summary>Spring Boot y arquitectura<span class="source-toggle" aria-hidden="true">+</span></summary>
+                    <div class="source-list">
+                        <article><strong>Spring Boot Reference Documentation</strong><p class="source-address">docs.spring.io/spring-boot/reference</p><a href="https://docs.spring.io/spring-boot/reference/" target="_blank" rel="noopener">Abrir fuente <span aria-hidden="true">↗</span></a></article>
+                        <article><strong>Spring Framework — Spring MVC</strong><p class="source-address">docs.spring.io/spring-framework/reference/web/webmvc.html</p><a href="https://docs.spring.io/spring-framework/reference/web/webmvc.html" target="_blank" rel="noopener">Abrir fuente <span aria-hidden="true">↗</span></a></article>
+                    </div>
+                </details>
+                <details class="source-group">
+                    <summary>Java y tendencias<span class="source-toggle" aria-hidden="true">+</span></summary>
+                    <div class="source-list">
+                        <article><strong>Oracle Java 21 — Virtual Threads</strong><p class="source-address">docs.oracle.com/.../virtual-threads.html</p><a href="https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html" target="_blank" rel="noopener">Abrir fuente <span aria-hidden="true">↗</span></a></article>
+                        <article><strong>Oracle Java — Records</strong><p class="source-address">docs.oracle.com/.../records.html</p><a href="https://docs.oracle.com/en/java/javase/21/language/records.html" target="_blank" rel="noopener">Abrir fuente <span aria-hidden="true">↗</span></a></article>
+                    </div>
+                </details>
+                <details class="source-group">
+                    <summary>Herramientas y documentación<span class="source-toggle" aria-hidden="true">+</span></summary>
+                    <div class="source-list">
+                        <article><strong>springdoc-openapi</strong><p class="source-address">springdoc.org</p><a href="https://springdoc.org/" target="_blank" rel="noopener">Abrir fuente <span aria-hidden="true">↗</span></a></article>
+                        <article><strong>Docker Documentation</strong><p class="source-address">docs.docker.com</p><a href="https://docs.docker.com/" target="_blank" rel="noopener">Abrir fuente <span aria-hidden="true">↗</span></a></article>
+                    </div>
+                </details>
+                <details class="source-group">
+                    <summary>Bibliografía / fuentes complementarias<span class="source-toggle" aria-hidden="true">+</span></summary>
+                    <div class="source-list">
+                        <article><strong>Instituto Profesional San Sebastián</strong><p>Material de la asignatura Desarrollo de Software Web II, Unidad 1.</p></article>
+                    </div>
+                </details>
+            </div>
+        </section>
+    </main>
+</div>
+<script th:src="@{/js/app.js}" src="/js/app.js"></script>
+</body>
+</html>
